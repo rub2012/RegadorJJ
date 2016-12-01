@@ -20,6 +20,7 @@ public class Regador
         	return;
       	}  
 		parser.Validar(System.out);
+		parser.GenerarINO();
 	}
 }
 PARSER_END(Regador)
@@ -43,13 +44,7 @@ void Validar(PrintStream printStream) throws NumberFormatException :
   try
   {
 	
-	(
-		<IDENTIFICADOR> <ASIGNACION> <NUMEROS> <EOL>
-	)*
-	(
-		<ACCION> <EOL> | <COMPARABLE> <COMPARADOR> <COMPARABLE> <ENTONCES> <ACCION> <EOL>
-	)*
-	<EOF>
+	Formato()
 	{ printStream.println("Archivo Valido"); }
   }
   catch (Exception e)
@@ -57,4 +52,36 @@ void Validar(PrintStream printStream) throws NumberFormatException :
     { e.printStackTrace(); }
   }
   
+}
+
+String Formato():
+{
+  String contenido = "";
+  Token identificador,valor;
+  int d;
+}
+{
+	(
+		identificador=<IDENTIFICADOR> <ASIGNACION> valor=<NUMEROS> <EOL>
+		{ contenido += "int " + identificador.image + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;  }
+	)*
+	{ contenido += "void setup() {" + System.lineSeparator() ;  }
+	(
+		<ACCION> <EOL>
+
+		|
+		<COMPARABLE> <COMPARADOR> <COMPARABLE> <ENTONCES> <ACCION> <EOL>
+		
+	)*
+	<EOF>
+	{ return contenido; }
+}
+
+void GenerarINO():
+{
+  Token identificador,valor;
+  int d;
+}
+{
+	{}
 }
