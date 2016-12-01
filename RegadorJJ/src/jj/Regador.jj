@@ -1,0 +1,53 @@
+options 
+{
+	STATIC = false ;
+}
+PARSER_BEGIN(Regador)
+package jj;
+import java.io.PrintStream;
+public class Regador 
+{
+	public static void main( String[] args ) throws ParseException, TokenMgrError, NumberFormatException 
+	{
+		Regador parser;
+		try
+		{
+    		parser = new Regador(new java.io.FileInputStream(new java.io.File(args[0])));
+      	}
+      	catch (java.io.FileNotFoundException e)
+      	{
+        	System.out.println("Archivo no encontrado");
+        	return;
+      	}  
+		parser.Validar(System.out);
+	}
+}
+PARSER_END(Regador)
+
+SKIP : { " " | "\t" }
+
+TOKEN : { < VARIABLEDEF : "setear" > }
+TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
+TOKEN : { < ASIGNACION : "=" > }
+TOKEN : { < IDENTIFICADOR : <LETRAS> ("_" <LETRAS>)*> }
+TOKEN : { < NUMEROS : (["0"-"9"])+ > }
+TOKEN : { < #LETRAS : (["A"-"Z"])+ > }
+TOKEN : { < COMPARABLE : "LEER_HUMEDAD" | "PORCENTAJE_UMBRAL_DE_HUMEDAD" > }
+TOKEN : { < ACCION : "BOMBEAR_AGUA_OFF" | "BOMBEAR_AGUA_ON" | "LED_INDICADOR_OFF" | "LED_INDICADOR_ON" | "ESPERA" | "MOSTRAR_HUMEDAD" > }
+TOKEN : { < COMPARADOR : "==" | "!=" | "<" | ">" | ">=" | "<=" > }
+TOKEN : { < ENTONCES : "->" > }
+
+void Validar(PrintStream printStream) throws NumberFormatException :
+{
+}
+{
+	(
+		<VARIABLEDEF> <IDENTIFICADOR> <ASIGNACION> <NUMEROS> 
+		<EOL>
+	)*
+	(
+		<ACCION> <EOL> | <COMPARABLE> <COMPARADOR> <COMPARABLE> <ENTONCES> <ACCION> <EOL>
+	)*
+	{ printStream.println("Archivo Valido"); }
+	<EOF>
+}
