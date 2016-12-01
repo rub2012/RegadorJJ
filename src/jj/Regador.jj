@@ -12,7 +12,7 @@ public class Regador
 		Regador parser;
 		try
 		{
-    		parser = new Regador(new java.io.FileInputStream(new java.io.File(args[0])));
+    		parser = new Regador(new java.io.FileInputStream(args[0]));
       	}
       	catch (java.io.FileNotFoundException e)
       	{
@@ -26,10 +26,9 @@ PARSER_END(Regador)
 
 SKIP : { " " | "\t" }
 
-TOKEN : { < VARIABLEDEF : "setear" > }
 TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
 TOKEN : { < ASIGNACION : "=" > }
-TOKEN : { < IDENTIFICADOR : <LETRAS> ("_" <LETRAS>)*> }
+TOKEN : { < IDENTIFICADOR : "setear " <LETRAS> ("_" <LETRAS>)*> }
 TOKEN : { < NUMEROS : (["0"-"9"])+ > }
 TOKEN : { < #LETRAS : (["A"-"Z"])+ > }
 TOKEN : { < COMPARABLE : "LEER_HUMEDAD" | "PORCENTAJE_UMBRAL_DE_HUMEDAD" > }
@@ -41,13 +40,22 @@ void Validar(PrintStream printStream) throws NumberFormatException :
 {
 }
 {
+  try
+  {
+	
 	(
-		<VARIABLEDEF> <IDENTIFICADOR> <ASIGNACION> <NUMEROS> 
+		<IDENTIFICADOR> <ASIGNACION> <NUMEROS> 
 		<EOL>
 	)*
 	(
 		<ACCION> <EOL> | <COMPARABLE> <COMPARADOR> <COMPARABLE> <ENTONCES> <ACCION> <EOL>
 	)*
-	{ printStream.println("Archivo Valido"); }
 	<EOF>
+	{ printStream.println("Archivo Valido"); }
+  }
+  catch (Exception e)
+  {
+    { e.printStackTrace(); }
+  }
+  
 }
