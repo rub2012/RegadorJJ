@@ -28,7 +28,7 @@ SKIP : { " " | "\t" }
 
 TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
 TOKEN : { < ASIGNACION : "=" > }
-TOKEN : { < IDENTIFICADOR : "setear " <LETRAS> ("_" <LETRAS>)*> }
+TOKEN : { < IDENTIFICADOR : "_" <LETRAS> ("_" <LETRAS>)*> }
 TOKEN : { < NUMEROS : (["0"-"9"])+ > }
 TOKEN : { < #LETRAS : (["A"-"Z"])+ > }
 TOKEN : { < COMPARABLE : "LEER_HUMEDAD" | "PORCENTAJE_UMBRAL_DE_HUMEDAD" > }
@@ -44,8 +44,7 @@ void Validar(PrintStream printStream) throws NumberFormatException :
   {
 	
 	(
-		<IDENTIFICADOR> <ASIGNACION> <NUMEROS> 
-		<EOL>
+		<IDENTIFICADOR> <ASIGNACION> <NUMEROS> <EOL>
 	)*
 	(
 		<ACCION> <EOL> | <COMPARABLE> <COMPARADOR> <COMPARABLE> <ENTONCES> <ACCION> <EOL>
