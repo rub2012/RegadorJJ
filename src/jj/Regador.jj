@@ -5,6 +5,7 @@ options
 PARSER_BEGIN(Regador)
 package jj;
 import java.io.PrintStream;
+import java.util.ArrayList;
 public class Regador 
 {
 	public static void main( String[] args ) throws ParseException, TokenMgrError, NumberFormatException 
@@ -20,7 +21,7 @@ public class Regador
         	return;
       	}  
 		parser.Validar(System.out);
-		parser.GenerarINO();
+		parser.Formato();
 	}
 }
 PARSER_END(Regador)
@@ -32,8 +33,8 @@ TOKEN : { < ASIGNACION : "=" > }
 TOKEN : { < IDENTIFICADOR : "_" <LETRAS> ("_" <LETRAS>)*> }
 TOKEN : { < NUMEROS : (["0"-"9"])+ > }
 TOKEN : { < #LETRAS : (["A"-"Z"])+ > }
-TOKEN : { < COMPARABLE : "LEER_HUMEDAD" | "PORCENTAJE_UMBRAL_DE_HUMEDAD" > }
-TOKEN : { < ACCION : "BOMBEAR_AGUA_OFF" | "BOMBEAR_AGUA_ON" | "LED_INDICADOR_OFF" | "LED_INDICADOR_ON" | "ESPERA" | "MOSTRAR_HUMEDAD" > }
+TOKEN : { < COMPARABLE : "SENSORHUMEDAD" | "PORCENTAJE_UMBRAL_DE_HUMEDAD" > }
+TOKEN : { < ACCION : "BOMBA_OFF" | "BOMBA_ON" | "LEDINDICADOR_OFF" | "LEDINDICADOR_ON" | "ESPERA" | "MOSTRAR_HUMEDAD" > }
 TOKEN : { < COMPARADOR : "==" | "!=" | "<" | ">" | ">=" | "<=" > }
 TOKEN : { < ENTONCES : "->" > }
 
@@ -57,15 +58,29 @@ void Validar(PrintStream printStream) throws NumberFormatException :
 String Formato():
 {
   String contenido = "";
+  ArrayList<String> input =  new ArrayList<String>();
+  ArrayList<String> output =  new ArrayList<String>();
+  String serial = "";
   Token identificador,valor;
   int d;
 }
 {
 	(
 		identificador=<IDENTIFICADOR> <ASIGNACION> valor=<NUMEROS> <EOL>
-		{ contenido += "int " + identificador.image + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;  }
+		{
+		  	String identi = identificador.image;
+			if (identi.contains("INPUT")) { input = mapear(input,identi); }
+		    if (identi.contains("OUTPUT")) { output = mapear(output,identi); }
+		    if (identi.contains("SERIAL")) { serial = identi.split("_")[1]; }
+			contenido += "int " + identificador.image + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;  }
 	)*
-	{ contenido += "void setup() {" + System.lineSeparator() ;  }
+	{ contenido += "void setup() {" + System.lineSeparator() ;
+	  contenido += setearPinMode(input,"INPUT");
+	  contenido += setearPinMode(output,"OUTPUT");
+	  contenido += "Serial.begin(" + serial + ");" + System.lineSeparator() + "}";
+	  contenido += "void loop() {" + System.lineSeparator();
+	}
+	
 	(
 		<ACCION> <EOL>
 
@@ -77,11 +92,45 @@ String Formato():
 	{ return contenido; }
 }
 
-void GenerarINO():
+ArrayList<String> mapear(ArrayList<String> map ,String palabra):
 {
-  Token identificador,valor;
-  int d;
 }
 {
-	{}
+	{
+		map.add(palabra.split("_")[1]);
+		return map;
+	}
+}
+
+String setearPinMode(ArrayList<String> array,String tipo):
+{
+  String mode = "";
+}
+{
+	{
+	  for(String variable : array)
+	  {
+		mode += "pinMode("+ variable + "," + tipo + ");" + System.lineSeparator() ;
+	  }
+	  return mode;
+	}
+}
+
+String accion(Token t,ArrayList<String> vars ):
+{
+  String mode = "";
+}
+{
+	{
+	  switch (t.image)
+	  {
+	  	case "BOMBA_OFF":
+	  	{
+	  	  mode += "digitalWrite("+", false);";
+		  break;
+	  	}
+	  	
+	  }
+	  return mode;
+	}
 }
