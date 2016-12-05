@@ -16,18 +16,17 @@ public class Regador
 		Regador parser;
 		try
 		{
-    		parser = new Regador(new java.io.FileInputStream(args[0]));
-    		//parser = new Regador(new java.io.FileInputStream("./io/input.txt"));
+    		//parser = new Regador(new java.io.FileInputStream(args[0]));
+    		parser = new Regador(new java.io.FileInputStream("./io/input.txt"));
       	}
       	catch (java.io.FileNotFoundException e)
       	{
         	System.out.println("Archivo no encontrado");
         	return;
       	}  
-		parser.Validar(System.out);
-		String contenido = parser.Formato();
-		System.out.print(contenido);
-		//parser.generarINO(contenido);
+		String contenido = parser.Validar();
+		//System.out.print(contenido);
+		parser.generarINO(contenido);
 	}
 }
 PARSER_END(Regador)
@@ -44,21 +43,22 @@ TOKEN : { < ACCION : "BOMBA_OFF" | "BOMBA_ON" | "LEDINDICADOR_OFF" | "LEDINDICAD
 TOKEN : { < COMPARADOR : "==" | "!=" | "<" | ">" | ">=" | "<=" > }
 TOKEN : { < ENTONCES : "->" > }
 
-void Validar(PrintStream printStream) throws NumberFormatException :
+String Validar() throws NumberFormatException :
 {
+  String contenido = "";
 }
 {
   try
   {
 	
-	Formato()
-	{ printStream.println("Archivo Valido"); }
+	contenido = Formato()
+	{ System.out.println("Archivo Valido"); }
   }
   catch (Exception e)
   {
     { e.printStackTrace(); }
   }
-  
+  { return contenido; }
 }
 
 String Formato():
@@ -80,7 +80,7 @@ String Formato():
 		    if (identi.contains("OUTPUT")) { output = mapear(output,identi); }
 		    if (identi.contains("SERIAL")) { serial = identi.split("_")[1]; }
 		    variables.add(identi.split("_")[1]);
-			contenido += "int " + identificador.image + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;  }
+			contenido += "int " + identificador.image.split("_")[1] + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;  }
 	)*
 	{
 	  contenido += "void setup() {" + System.lineSeparator() ;
@@ -201,7 +201,7 @@ void generarINO(String contenido):
 	try
 	{
 		{
-		 	BufferedWriter bw = new BufferedWriter(new FileWriter("./regador.ino"));
+		 	BufferedWriter bw = new BufferedWriter(new FileWriter("./io/io.ino"));
 			bw.write(contenido);
 			bw.close();
 		}
