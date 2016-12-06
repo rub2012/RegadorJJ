@@ -35,13 +35,14 @@ SKIP : { " " | "\t" }
 
 TOKEN : { < EOL : "\n" | "\r" | "\r\n" > }
 TOKEN : { < ASIGNACION : "=" > }
-TOKEN : { < IDENTIFICADOR : "_" <LETRAS> ("_" <LETRAS>)*> }
+TOKEN : { < IDENTIFICADOR : "_" <TAG> ("_" <LETRAS>)*> }
 TOKEN : { < NUMEROS : (["0"-"9"])+ > }
 TOKEN : { < #LETRAS : (["A"-"Z"])+ > }
 TOKEN : { < COMPARABLE : "SENSORHUMEDAD" | "PORCENTAJEUMBRALDEHUMEDAD" > }
 TOKEN : { < ACCION : "BOMBA_OFF" | "BOMBA_ON" | "LEDINDICADOR_OFF" | "LEDINDICADOR_ON" | "ESPERA" | "SENSORHUMEDAD_MOSTRAR" > }
 TOKEN : { < COMPARADOR : "==" | "!=" | "<" | ">" | ">=" | "<=" > }
 TOKEN : { < ENTONCES : "->" > }
+TOKEN : { < #TAG : "SENSORHUMEDAD" | "PORCENTAJEUMBRALDEHUMEDAD" | "BOMBA" | "LEDINDICADOR" | "ESPERA" | "SERIALCOM" > }
 
 String Validar() throws NumberFormatException :
 {
@@ -86,7 +87,7 @@ String Formato():
 	  contenido += "void setup() {" + System.lineSeparator() ;
 	  contenido += setearPinMode(input,"INPUT");
 	  contenido += setearPinMode(output,"OUTPUT");
-	  contenido += "Serial.begin(" + serial + ");" + System.lineSeparator() + "}";
+	  contenido += "Serial.begin(" + serial + ");" + System.lineSeparator() + "}" + System.lineSeparator();
 	  contenido += "void loop() {" + System.lineSeparator();
 	}
 	
@@ -102,7 +103,7 @@ String Formato():
 		}
 		
 	)*
-	{ contenido += " }";}
+	{ contenido += "}";}
 	<EOF>
 	{ return contenido; }
 }
