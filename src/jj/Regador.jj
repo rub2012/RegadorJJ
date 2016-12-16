@@ -81,7 +81,8 @@ String Formato():
 		    if (identi.contains("OUTPUT")) { output = mapear(output,identi); }
 		    if (identi.contains("SERIAL")) { serial = identi.split("_")[1]; }
 		    variables.add(identi.split("_")[1]);
-			contenido += "int " + identificador.image.split("_")[1] + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;  }
+			contenido += "int " + identificador.image.split("_")[1] + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;
+		}
 	)*
 	{
 	  contenido += "void setup() {" + System.lineSeparator() ;
