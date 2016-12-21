@@ -44,7 +44,7 @@ public class GeneraArchivoView extends JDialog
             JButton btnAtras = new JButton("Atras");
             btnAtras.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
-                  controller.dispatchRequest("ANTERIOR");
+                  controller.dispatchRequest("ANTERIOR",null);
                }
             });
             buttonPane.add(btnAtras);

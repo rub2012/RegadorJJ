@@ -1,9 +1,6 @@
 package manager;
 
-import java.util.Observable;
-import java.util.Observer;
-
-public class FrontController implements Observer
+public class FrontController
 {
    private Dispatcher dispatcher;
 
@@ -18,18 +15,12 @@ public class FrontController implements Observer
       return true;
    }
    
-   public void dispatchRequest(String request)
+   public void dispatchRequest(String request,String[] args)
    {
       if(isAuthenticUser())
       {
          dispatcher.dispatch(request);
       }  
-   }
-
-   @Override
-   public void update(Observable o, Object arg)
-   {
-      dispatchRequest((String)arg);      
    }
 
 }

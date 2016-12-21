@@ -5,6 +5,7 @@ import java.awt.FlowLayout;
 
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
@@ -15,15 +16,23 @@ import java.awt.event.ActionListener;
 import java.util.Observable;
 import java.util.Observer;
 import java.awt.event.ActionEvent;
+import java.awt.event.InputMethodListener;
+import java.awt.event.InputMethodEvent;
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeEvent;
 
 public class CargaArchivoView extends JDialog
 {
 
+   private JFileChooser seleccionador;
    private final JPanel contentPanel = new JPanel();
-   private JTextField textField;
+   private JTextField filepath;
+   private JButton btnSiguiente;
    private FrontController controller;
    public CargaArchivoView(final FrontController controller)
    {
+      seleccionador = new JFileChooser();
+      btnSiguiente = new JButton("Siguiente");
       this.controller = controller;
       setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
       setTitle("Asistente");
@@ -35,13 +44,33 @@ public class CargaArchivoView extends JDialog
       getContentPane().add(contentPanel, BorderLayout.CENTER);
       contentPanel.setLayout(null);
       {
-         textField = new JTextField();
-         textField.setBounds(10, 11, 241, 20);
-         contentPanel.add(textField);
-         textField.setColumns(10);
+         filepath = new JTextField();
+         filepath.addPropertyChangeListener(new PropertyChangeListener() {
+            public void propertyChange(PropertyChangeEvent evt) {
+               if (filepath.getText().length() == 0){
+                  btnSiguiente.setEnabled(false);
+               }else{
+                  btnSiguiente.setEnabled(true);
+               }
+            }
+         });
+         filepath.setEditable(false);
+         filepath.setBounds(10, 11, 241, 20);
+         contentPanel.add(filepath);
+         filepath.setColumns(10);
       }
       {
          JButton btnExaminar = new JButton("Examinar");
+         btnExaminar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+               int returnVal = seleccionador.showOpenDialog(getParent());
+               if (returnVal == JFileChooser.APPROVE_OPTION) {
+                  String pathAbsoluto = seleccionador.getSelectedFile().getAbsolutePath();
+                  filepath.setText(pathAbsoluto);
+                  filepath.setToolTipText(pathAbsoluto);
+               }
+            }
+         });
          btnExaminar.setBounds(261, 10, 89, 23);
          contentPanel.add(btnExaminar);
       }
@@ -50,16 +79,21 @@ public class CargaArchivoView extends JDialog
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
          getContentPane().add(buttonPane, BorderLayout.SOUTH);
          {
-            JButton btnSiguiente = new JButton("Siguiente");
-            btnSiguiente.addActionListener(new ActionListener() {
+               btnSiguiente.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
-                  controller.dispatchRequest("SIGUIENTE");
+                  controller.dispatchRequest("SIGUIENTE",new String[]{filepath.getText()});
                }
             });
             buttonPane.add(btnSiguiente);
          }
          {
             JButton btnCancelar = new JButton("Cancelar");
+            btnCancelar.addActionListener(new ActionListener() {
+               public void actionPerformed(ActionEvent e) {
+                  filepath.setText("");
+                  filepath.setToolTipText(null);
+               }
+            });
             btnCancelar.setActionCommand("OK");
             buttonPane.add(btnCancelar);
             getRootPane().setDefaultButton(btnCancelar);

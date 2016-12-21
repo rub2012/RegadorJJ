@@ -44,7 +44,7 @@ public class ValidaArchivoView extends JDialog
             JButton btnAtras = new JButton("Atras");
             btnAtras.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
-                  controller.dispatchRequest("ANTERIOR");
+                  controller.dispatchRequest("ANTERIOR",null);
                }
             });
             buttonPane.add(btnAtras);
@@ -53,7 +53,7 @@ public class ValidaArchivoView extends JDialog
             JButton btnSiguiente = new JButton("Siguiente");
             btnSiguiente.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
-                  controller.dispatchRequest("SIGUIENTE");
+                  controller.dispatchRequest("SIGUIENTE",null);
                }
             });
             buttonPane.add(btnSiguiente);
