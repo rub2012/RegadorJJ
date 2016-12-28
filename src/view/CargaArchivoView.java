@@ -8,6 +8,7 @@ import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
 
 import manager.FrontController;
 
@@ -32,6 +33,7 @@ public class CargaArchivoView extends JDialog
    public CargaArchivoView(final FrontController controller)
    {
       seleccionador = new JFileChooser();
+      seleccionador.setFileFilter(new FileNameExtensionFilter("Archivos de texto","txt"));
       btnSiguiente = new JButton("Siguiente");
       this.controller = controller;
       setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);
@@ -81,7 +83,7 @@ public class CargaArchivoView extends JDialog
          {
                btnSiguiente.addActionListener(new ActionListener() {
                public void actionPerformed(ActionEvent e) {
-                  controller.dispatchRequest("SIGUIENTE",new String[]{filepath.getText()});
+                  controller.dispatchRequest("SIGUIENTE");
                }
             });
             buttonPane.add(btnSiguiente);
@@ -110,6 +112,10 @@ public class CargaArchivoView extends JDialog
             buttonPane.add(btnFinalizar);
          }
       }
+      
+   }
+   public String getLink(){
+      return filepath.getText();
    }
 
 }

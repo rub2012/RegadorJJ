@@ -15,12 +15,17 @@ public class FrontController
       return true;
    }
    
-   public void dispatchRequest(String request,String[] args)
+   public void dispatchRequest(String request)
    {
       if(isAuthenticUser())
       {
          dispatcher.dispatch(request);
       }  
+   }
+   
+   public String dispatchRequestResponse(String request)
+   {
+      return dispatcher.dispatchResponse(request);
    }
 
 }

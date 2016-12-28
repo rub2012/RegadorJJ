@@ -87,5 +87,23 @@ public class Dispatcher
       return anterior;
    }
 
+   public String dispatchResponse(String request)
+   {
+      String response="";
+      switch (request)
+      {
+         case "LINK":
+         {
+            response = cargaArchivo.getLink();
+            break;
+         }
+         default: 
+         {
+            break;
+         }
+      }
+      return response;
+   }
+
 }
 

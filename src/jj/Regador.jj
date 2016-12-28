@@ -24,9 +24,9 @@ public class Regador
         	System.out.println("Archivo no encontrado");
         	return;
       	}  
-		String contenido = parser.Validar();
+		//String contenido = parser.validar();
 		//System.out.print(contenido);
-		parser.generarINO(contenido);
+		//parser.generarINO(contenido);
 	}
 }
 PARSER_END(Regador)
@@ -44,7 +44,23 @@ TOKEN : { < COMPARADOR : "==" | "!=" | "<" | ">" | ">=" | "<=" > }
 TOKEN : { < ENTONCES : "->" > }
 TOKEN : { < #TAG : "SENSORHUMEDAD" | "PORCENTAJEUMBRALDEHUMEDAD" | "BOMBA" | "LEDINDICADOR" | "ESPERA" | "SERIALCOM" > }
 
-String Validar() throws NumberFormatException :
+void validar() :
+{
+}
+{
+  	(
+		<IDENTIFICADOR> <ASIGNACION> <NUMEROS> <EOL>
+	)+
+
+	(
+		<ACCION> <EOL>
+		|
+		<COMPARABLE> <COMPARADOR> <COMPARABLE> <ENTONCES> <ACCION> <EOL>
+	)+
+  	<EOF>
+}
+
+String generarContenido() throws NumberFormatException :
 {
   String contenido = "";
 }
@@ -52,7 +68,7 @@ String Validar() throws NumberFormatException :
   try
   {
 	
-	contenido = Formato()
+	contenido = formato()
 	{ System.out.println("Archivo Valido"); }
   }
   catch (Exception e)
@@ -62,7 +78,7 @@ String Validar() throws NumberFormatException :
   { return contenido; }
 }
 
-String Formato():
+String formato():
 {
   String contenido = "";
   ArrayList<String> input =  new ArrayList<String>();
@@ -83,7 +99,7 @@ String Formato():
 		    variables.add(identi.split("_")[1]);
 			contenido += "int " + identificador.image.split("_")[1] + " = " + Integer.parseInt(valor.image) + ";" + System.lineSeparator() ;
 		}
-	)*
+	)+
 	{
 	  contenido += "void setup() {" + System.lineSeparator() ;
 	  contenido += setearPinMode(input,"INPUT");
@@ -103,7 +119,7 @@ String Formato():
 		  contenido += "if( " + accion(compara1,variables) + comparador.image + accion(compara2,variables) + ") { " + accion(accion,variables) + " }" + System.lineSeparator() ;
 		}
 		
-	)*
+	)+
 	{ contenido += "}";}
 	<EOF>
 	{ return contenido; }
@@ -196,14 +212,14 @@ String accion(Token t,ArrayList<String> vars ):
 	}
 }
 
-void generarINO(String contenido):
+void generarINO(String contenido,String ruta):
 {
 }
 {
 	try
 	{
 		{
-		 	BufferedWriter bw = new BufferedWriter(new FileWriter("./io/io.ino"));
+		 	BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
 			bw.write(contenido);
 			bw.close();
 		}
