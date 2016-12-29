@@ -211,21 +211,3 @@ String accion(Token t,ArrayList<String> vars ):
 	  return mode;
 	}
 }
-
-void generarINO(String contenido,String ruta):
-{
-}
-{
-	try
-	{
-		{
-		 	BufferedWriter bw = new BufferedWriter(new FileWriter(ruta));
-			bw.write(contenido);
-			bw.close();
-		}
-	}
-	catch (IOException e)
-	{
-		e.printStackTrace();
-	}
-}

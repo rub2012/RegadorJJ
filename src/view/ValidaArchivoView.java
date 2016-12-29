@@ -10,6 +10,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import manager.FrontController;
+import plugin.Loader;
+import plugin.LoaderArchivoTxt;
 import jj.ParseException;
 import jj.Regador;
 import jj.TokenMgrError;
@@ -49,7 +51,8 @@ public class ValidaArchivoView extends JDialog
                btnSiguiente.setEnabled(false);
                try
                {
-                  Regador parser = new Regador(new FileInputStream(filepath));
+                  Loader cargador = new LoaderArchivoTxt();
+                  Regador parser = new Regador(cargador.cargar(filepath));
                   parser.validar();
                   JOptionPane.showMessageDialog(getParent(), "Archivo Válido","",JOptionPane.INFORMATION_MESSAGE);
                   btnSiguiente.setEnabled(true);

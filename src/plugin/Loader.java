@@ -1,11 +1,13 @@
 package plugin;
 
-import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 public interface Loader
 {
-   public File cargar(String path);
+   public FileInputStream cargar(String path) throws FileNotFoundException;
    
-   public void guardar(String path);
+   public void guardar(String contenido,String ruta) throws IOException;
 
 }

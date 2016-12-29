@@ -6,6 +6,7 @@ import java.awt.FlowLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -13,11 +14,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import jj.ParseException;
 import jj.Regador;
 import manager.FrontController;
+import plugin.Loader;
+import plugin.LoaderArchivoTxt;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 import java.awt.event.ActionEvent;
 
 public class GeneraArchivoView extends JDialog
@@ -50,8 +55,9 @@ public class GeneraArchivoView extends JDialog
                   pathAbsoluto += ".ino";
                   try
                   {
-                     Regador parser = new Regador(new FileInputStream(filepath));
-                     parser.generarINO(parser.generarContenido(), pathAbsoluto);
+                     Loader cargador = new LoaderArchivoTxt();
+                     Regador parser = new Regador(cargador.cargar(filepath));
+                     cargador.guardar(parser.generarContenido(),pathAbsoluto);
                   } catch (FileNotFoundException e1)
                   {
                      e1.printStackTrace();
@@ -60,6 +66,10 @@ public class GeneraArchivoView extends JDialog
                      e1.printStackTrace();
                   } catch (ParseException e1)
                   {
+                     e1.printStackTrace();
+                  } catch (IOException e1)
+                  {
+                     JOptionPane.showMessageDialog(getParent(), "Error al guardar el archivo","",JOptionPane.ERROR_MESSAGE);
                      e1.printStackTrace();
                   }
                }
