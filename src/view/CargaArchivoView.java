@@ -21,6 +21,7 @@ import java.awt.event.InputMethodListener;
 import java.awt.event.InputMethodEvent;
 import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
+import javax.swing.JLabel;
 
 public class CargaArchivoView extends JDialog
 {
@@ -57,7 +58,7 @@ public class CargaArchivoView extends JDialog
             }
          });
          filepath.setEditable(false);
-         filepath.setBounds(10, 11, 241, 20);
+         filepath.setBounds(10, 28, 241, 20);
          contentPanel.add(filepath);
          filepath.setColumns(10);
       }
@@ -73,9 +74,13 @@ public class CargaArchivoView extends JDialog
                }
             }
          });
-         btnExaminar.setBounds(261, 10, 89, 23);
+         btnExaminar.setBounds(261, 27, 89, 23);
          contentPanel.add(btnExaminar);
       }
+      
+      JLabel lblSeleccioneElPrograma = new JLabel("Seleccione el programa a validar:");
+      lblSeleccioneElPrograma.setBounds(10, 11, 241, 14);
+      contentPanel.add(lblSeleccioneElPrograma);
       {
          JPanel buttonPane = new JPanel();
          buttonPane.setLayout(new FlowLayout(FlowLayout.RIGHT));
@@ -117,5 +122,4 @@ public class CargaArchivoView extends JDialog
    public String getLink(){
       return filepath.getText();
    }
-
 }
