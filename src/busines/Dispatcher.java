@@ -1,19 +1,16 @@
-package manager;
+package busines;
 
 import view.CargaArchivoView;
 import view.GeneraArchivoView;
-import view.ValidaArchivoView;
 
 public class Dispatcher
 {
    private CargaArchivoView cargaArchivo;
-   private ValidaArchivoView validaArchivo;
    private GeneraArchivoView generaArchivo;
    
    public Dispatcher(FrontController frontController)
    {
       cargaArchivo = new CargaArchivoView(frontController);
-      validaArchivo = new ValidaArchivoView(frontController);
       generaArchivo = new GeneraArchivoView(frontController);
    }
    
@@ -25,12 +22,6 @@ public class Dispatcher
          {
             ocultarVistas();
             cargaArchivo.setVisible(true);
-            break;
-         }
-         case "VALIDA":
-         {
-            ocultarVistas();
-            validaArchivo.setVisible(true);
             break;
          }
          case "GENERA":
@@ -59,7 +50,6 @@ public class Dispatcher
    private void ocultarVistas()
    {
       cargaArchivo.setVisible(false);
-      validaArchivo.setVisible(false);
       generaArchivo.setVisible(false);
    }
    
@@ -67,9 +57,6 @@ public class Dispatcher
    {
       String siguiente ="";
       if (cargaArchivo.isVisible()){
-         siguiente = "VALIDA";
-      }
-      else if(validaArchivo.isVisible()){
          siguiente = "GENERA";
       }
       return siguiente;
@@ -78,11 +65,8 @@ public class Dispatcher
    private String anterior()
    {
       String anterior ="";
-      if (validaArchivo.isVisible()){
+      if(generaArchivo.isVisible()){
          anterior = "CARGA";
-      }
-      else if(generaArchivo.isVisible()){
-         anterior = "VALIDA";
       }
       return anterior;
    }

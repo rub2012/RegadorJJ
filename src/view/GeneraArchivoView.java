@@ -11,11 +11,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import busines.FrontController;
+import busines.LoaderINO;
+import domain.Loader;
 import jj.ParseException;
 import jj.Regador;
-import manager.FrontController;
-import plugin.Loader;
-import plugin.LoaderArchivoTxt;
+import jj.TokenMgrError;
 
 import javax.swing.JTextField;
 import java.awt.event.ActionListener;
@@ -55,22 +56,33 @@ public class GeneraArchivoView extends JDialog
                   pathAbsoluto += ".ino";
                   try
                   {
-                     Loader cargador = new LoaderArchivoTxt();
+                     Loader cargador = new LoaderINO();
                      Regador parser = new Regador(cargador.cargar(filepath));
+                     parser.validar();
                      cargador.guardar(parser.generarContenido(),pathAbsoluto);
                   } catch (FileNotFoundException e1)
                   {
+                	 JOptionPane.showMessageDialog(getParent(), "Archivo no encontrado","",JOptionPane.ERROR_MESSAGE);
                      e1.printStackTrace();
                   } catch (NumberFormatException e1)
                   {
                      e1.printStackTrace();
                   } catch (ParseException e1)
                   {
+                	 JOptionPane.showMessageDialog(getParent(), "Error de formato","",JOptionPane.ERROR_MESSAGE);
                      e1.printStackTrace();
+                  } catch(TokenMgrError e1)
+                  {
+                      JOptionPane.showMessageDialog(getParent(), "Error de parseo léxico","",JOptionPane.ERROR_MESSAGE);
+                      e1.printStackTrace();
                   } catch (IOException e1)
                   {
                      JOptionPane.showMessageDialog(getParent(), "Error al guardar el archivo","",JOptionPane.ERROR_MESSAGE);
                      e1.printStackTrace();
+                  } catch (Exception e1)
+                  {
+                      JOptionPane.showMessageDialog(getParent(), "Hubo un error","",JOptionPane.ERROR_MESSAGE);
+                      e1.printStackTrace();
                   }
                }
             }
@@ -90,12 +102,6 @@ public class GeneraArchivoView extends JDialog
                }
             });
             buttonPane.add(btnAtras);
-         }
-         {
-            JButton btnCancelar = new JButton("Cancelar");
-            btnCancelar.setActionCommand("OK");
-            buttonPane.add(btnCancelar);
-            getRootPane().setDefaultButton(btnCancelar);
          }
          {
             JButton btnFinalizar = new JButton("Finalizar");

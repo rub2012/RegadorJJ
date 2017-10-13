@@ -1,4 +1,4 @@
-package plugin;
+package domain;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;

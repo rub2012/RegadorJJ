@@ -1,4 +1,4 @@
-package plugin;
+package busines;
 
 import java.io.BufferedWriter;
 import java.io.FileInputStream;
@@ -6,7 +6,9 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class LoaderArchivoTxt implements Loader
+import domain.Loader;
+
+public class LoaderINO implements Loader
 {
 
    @Override

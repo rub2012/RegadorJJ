@@ -1,6 +1,6 @@
 package main;
 
-import manager.FrontController;
+import busines.FrontController;
 
 public class Main
 {

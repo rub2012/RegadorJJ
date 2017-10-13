@@ -1,4 +1,4 @@
-package manager;
+package busines;
 
 public class FrontController
 {
@@ -11,7 +11,6 @@ public class FrontController
    
    private boolean isAuthenticUser()
    {
-      System.out.println("User is authenticated successfully.");
       return true;
    }
    
