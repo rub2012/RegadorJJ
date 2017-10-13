@@ -26,12 +26,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.awt.event.ActionEvent;
 
-public class GeneraArchivoView extends JDialog
+public class GeneraView extends JDialog
 {
 
    private final JPanel contentPanel = new JPanel();
    private FrontController controller;
-   public GeneraArchivoView(final FrontController controller)
+   public GeneraView(final FrontController controller)
    {
       this.controller = controller;
       setDefaultCloseOperation(JDialog.DO_NOTHING_ON_CLOSE);

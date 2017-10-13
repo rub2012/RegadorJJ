@@ -1,17 +1,17 @@
 package busines;
 
-import view.CargaArchivoView;
-import view.GeneraArchivoView;
+import view.CargaView;
+import view.GeneraView;
 
 public class Dispatcher
 {
-   private CargaArchivoView cargaArchivo;
-   private GeneraArchivoView generaArchivo;
+   private CargaView cargaArchivo;
+   private GeneraView generaArchivo;
    
    public Dispatcher(FrontController frontController)
    {
-      cargaArchivo = new CargaArchivoView(frontController);
-      generaArchivo = new GeneraArchivoView(frontController);
+      cargaArchivo = new CargaView(frontController);
+      generaArchivo = new GeneraView(frontController);
    }
    
    public void dispatch(String request)

@@ -16,17 +16,13 @@ public class Regador
 		Regador parser;
 		try
 		{
-    		//parser = new Regador(new java.io.FileInputStream(args[0]));
     		parser = new Regador(new java.io.FileInputStream("./io/input.txt"));
       	}
       	catch (java.io.FileNotFoundException e)
       	{
         	System.out.println("Archivo no encontrado");
         	return;
-      	}  
-		//String contenido = parser.validar();
-		//System.out.print(contenido);
-		//parser.generarINO(contenido);
+      	} 
 	}
 }
 PARSER_END(Regador)

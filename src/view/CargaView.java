@@ -23,7 +23,7 @@ import java.beans.PropertyChangeListener;
 import java.beans.PropertyChangeEvent;
 import javax.swing.JLabel;
 
-public class CargaArchivoView extends JDialog
+public class CargaView extends JDialog
 {
 
    private JFileChooser seleccionador;
@@ -31,7 +31,7 @@ public class CargaArchivoView extends JDialog
    private JTextField filepath;
    private JButton btnSiguiente;
    private FrontController controller;
-   public CargaArchivoView(final FrontController controller)
+   public CargaView(final FrontController controller)
    {
       seleccionador = new JFileChooser();
       seleccionador.setFileFilter(new FileNameExtensionFilter("Archivos de texto","txt"));
