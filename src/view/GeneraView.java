@@ -73,7 +73,7 @@ public class GeneraView extends JDialog
                      e1.printStackTrace();
                   } catch(TokenMgrError e1)
                   {
-                      JOptionPane.showMessageDialog(getParent(), "Error de parseo léxico","",JOptionPane.ERROR_MESSAGE);
+                      JOptionPane.showMessageDialog(getParent(), "Error de parseo lÃ©xico","",JOptionPane.ERROR_MESSAGE);
                       e1.printStackTrace();
                   } catch (IOException e1)
                   {
