@@ -1,5 +1,11 @@
 package busines;
 
+import java.io.InputStream;
+
+import domain.Loader;
+import domain.Parser;
+import jj.ParseException;
+import jj.Regador;
 import view.CargaView;
 import view.GeneraView;
 
@@ -87,6 +93,23 @@ public class Dispatcher
          }
       }
       return response;
+   }
+   
+   public void validarPrograma(InputStream input) throws ParseException
+   {
+	   Parser parser = new Regador(input);
+	   parser.validarPrograma();
+   }
+   
+   public String generarINO(InputStream input) throws NumberFormatException, ParseException
+   {	  
+	   Parser parser = new Regador(input);
+	   return parser.generarINO();
+   }
+   
+   public Loader loaderINO()
+   {
+	   return new LoaderINO();
    }
 
 }

@@ -56,10 +56,9 @@ public class GeneraView extends JDialog
                   pathAbsoluto += ".ino";
                   try
                   {
-                     Loader cargador = new LoaderINO();
-                     Regador parser = new Regador(cargador.cargar(filepath));
-                     parser.validar();
-                     cargador.guardar(parser.generarContenido(),pathAbsoluto);
+                     Loader cargador = controller.loaderINO();
+                     controller.validarPrograma(cargador.cargar(filepath));                     
+                     cargador.guardar(controller.generarINO(cargador.cargar(filepath)),pathAbsoluto);
                   } catch (FileNotFoundException e1)
                   {
                 	 JOptionPane.showMessageDialog(getParent(), "Archivo no encontrado","",JOptionPane.ERROR_MESSAGE);

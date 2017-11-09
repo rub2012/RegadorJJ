@@ -9,21 +9,11 @@ import java.io.BufferedWriter;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
-public class Regador 
+import domain.Parser;
+
+public class Regador implements Parser
 {
-	public static void main( String[] args ) throws ParseException, TokenMgrError, NumberFormatException 
-	{
-		Regador parser;
-		try
-		{
-    		parser = new Regador(new java.io.FileInputStream("./io/input.txt"));
-      	}
-      	catch (java.io.FileNotFoundException e)
-      	{
-        	System.out.println("Archivo no encontrado");
-        	return;
-      	} 
-	}
+
 }
 PARSER_END(Regador)
 
@@ -40,7 +30,7 @@ TOKEN : { < COMPARADOR : "==" | "!=" | "<" | ">" | ">=" | "<=" > }
 TOKEN : { < ENTONCES : "->" > }
 TOKEN : { < #TAG : "SENSORHUMEDAD" | "PORCENTAJEUMBRALDEHUMEDAD" | "BOMBA" | "LEDINDICADOR" | "ESPERA" | "SERIALCOM" > }
 
-void validar() :
+void validarPrograma() :
 {
 }
 {
@@ -56,7 +46,7 @@ void validar() :
   	<EOF>
 }
 
-String generarContenido() throws NumberFormatException :
+String generarINO() throws NumberFormatException :
 {
   String contenido = "";
 }
