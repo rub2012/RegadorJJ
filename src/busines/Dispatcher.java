@@ -11,13 +11,13 @@ import view.GeneraView;
 
 public class Dispatcher
 {
-   private CargaView cargaArchivo;
-   private GeneraView generaArchivo;
+   private CargaView cargaVista;
+   private GeneraView generaVista;
    
    public Dispatcher(FrontController frontController)
    {
-      cargaArchivo = new CargaView(frontController);
-      generaArchivo = new GeneraView(frontController);
+      cargaVista = new CargaView(frontController);
+      generaVista = new GeneraView(frontController);
    }
    
    public void dispatch(String request)
@@ -27,13 +27,13 @@ public class Dispatcher
          case "CARGA":
          {
             ocultarVistas();
-            cargaArchivo.setVisible(true);
+            cargaVista.setVisible(true);
             break;
          }
          case "GENERA":
          {
             ocultarVistas();
-            generaArchivo.setVisible(true);
+            generaVista.setVisible(true);
             break;
          }
          case "SIGUIENTE":
@@ -55,14 +55,14 @@ public class Dispatcher
    
    private void ocultarVistas()
    {
-      cargaArchivo.setVisible(false);
-      generaArchivo.setVisible(false);
+      cargaVista.setVisible(false);
+      generaVista.setVisible(false);
    }
    
    private String siguiente()
    {
       String siguiente ="";
-      if (cargaArchivo.isVisible()){
+      if (cargaVista.isVisible()){
          siguiente = "GENERA";
       }
       return siguiente;
@@ -71,7 +71,7 @@ public class Dispatcher
    private String anterior()
    {
       String anterior ="";
-      if(generaArchivo.isVisible()){
+      if(generaVista.isVisible()){
          anterior = "CARGA";
       }
       return anterior;
@@ -84,7 +84,7 @@ public class Dispatcher
       {
          case "LINK":
          {
-            response = cargaArchivo.getLink();
+            response = cargaVista.getLink();
             break;
          }
          default: 
